@@ -76,7 +76,7 @@ def setup(config: preference.Config):
 
 def build_dataloader(files, config: preference.Config, desc):
     audio_list = []
-    for file in tqdm.tqdm(files[:8], desc=desc):
+    for file in tqdm.tqdm(files, desc=desc):
         with open(file, 'rb') as f:
             data = pickle.load(f)
             audio_list.append(np.array(data['audio']))
