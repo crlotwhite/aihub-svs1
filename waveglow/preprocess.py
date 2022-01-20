@@ -36,11 +36,11 @@ def split_segment(notes, config: Config):
     segment_list = list()
 
     for note in notes:
-        if len(note['Lyric']) == 0:
+        if len(note['lyric']) == 0:
             continue
 
-        start = float(note['startTime'])
-        end = float(note['endTime'])
+        start = float(note['start_time'])
+        end = float(note['end_time'])
 
         if segment_start == 0 and segment_end == 0:
             segment_start = start
@@ -76,7 +76,7 @@ def precess(wav_file, tgt_file, out_file, config: Config, desc, logger):
 
         with open(tgt_file[i], 'r', encoding='UTF-8') as f:
             obj = json.load(f)
-        notes = obj['Notes']
+        notes = obj['notes']
 
         segment_list = split_segment(notes, config)
 
