@@ -1,0 +1,6 @@
+librosa==0.10.1
+pyworld==0.3.4
+scipy==1.11.3
+tensorboard==2.14.1
+tensorboardX==2.6.2.2
+tqdm==4.66.1
