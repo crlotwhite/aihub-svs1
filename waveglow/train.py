@@ -131,10 +131,13 @@ def train_model(
     print('max epoch: ', config.training_epoch)
 
     for epoch in range(start_epoch, config.training_epoch):
+        print('========================================')
+        print('epoch: ', epoch + 1)
+        print('========================================')
         start = time.time()
         count = 0
         loss_total = 0
-        for audio in dataloader:
+        for audio in tqdm.tqdm(dataloader):
             audio = audio.to(device, non_blocking=True)
 
             mel = mel_spectrogram(audio)
@@ -154,11 +157,14 @@ def train_model(
         train_loss = loss_total / count
 
         if valid_loader is not None:
+            print('========================================')
+            print('Validation')
+            print('========================================')
             model.eval()
             count = 0
             loss_total = 0
             with torch.no_grad():
-                for audio in valid_loader:
+                for audio in tqdm.tqdm(valid_loader):
                     audio = audio.to(device, non_blocking=True)
                     mel = mel_spectrogram(audio)
                     outputs = model((mel, audio))
@@ -341,5 +347,8 @@ if __name__ == '__main__':
     # model
     model, loss, optimizer = build_model(config, device)
 
+    print('========================================')
+    print('start training')
+    print('========================================')
     # train
     train_model(train_loader, valid_loader, model, loss, optimizer, sw_train, sw_valid, config, logger)
