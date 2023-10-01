@@ -346,9 +346,15 @@ if __name__ == '__main__':
 
     # model
     model, loss, optimizer = build_model(config, device)
+    
+    # load checkpoint
+    start_epoch = 0
+    if config.get('last_checkpoint_file', None) is not None:
+        model = torch.load(config['last_checkpoint_file'])
+        start_epoch = config['last_epoch'] + 1
 
     print('========================================')
     print('start training')
     print('========================================')
     # train
-    train_model(train_loader, valid_loader, model, loss, optimizer, sw_train, sw_valid, config, logger)
+    train_model(train_loader, valid_loader, model, loss, optimizer, sw_train, sw_valid, config, logger, start_epoch=start_epoch)
